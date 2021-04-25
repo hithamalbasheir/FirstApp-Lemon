@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FirstApp@Lemon</string>
+    <string name="userID">userID</string>
+    <string name="title">Title</string>
+    <string name="body">body</string>
+    <string name="unknown_error">An unknown error occured</string>
+</resources>
