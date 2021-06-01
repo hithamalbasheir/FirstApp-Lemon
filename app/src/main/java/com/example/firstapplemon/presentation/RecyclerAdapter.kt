@@ -1,11 +1,11 @@
-package com.example.firstapplemon.Ui
+package com.example.firstapplemon.presentation
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.firstapplemon.Model.Post
 import com.example.firstapplemon.databinding.ListRowBinding
+import com.example.firstapplemon.domain.models.Post
 
 class RecyclerAdapter(private val context: Context): RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
     private var postList :List<Post> = listOf()
@@ -21,9 +21,9 @@ class RecyclerAdapter(private val context: Context): RecyclerView.Adapter<Recycl
         return postList.size
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.userID.text = postList.get(position).userId.toString()
-        holder.title.text = postList.get(position).title
-        holder.body.text = postList.get(position).body
+        holder.userID.text = postList[position].userId.toString()
+        holder.title.text = postList[position].title
+        holder.body.text = postList[position].body
     }
     fun updatePosts(postList: List<Post>) {
         this.postList = postList

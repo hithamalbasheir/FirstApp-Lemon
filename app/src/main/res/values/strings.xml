@@ -4,4 +4,6 @@
     <string name="title">Title</string>
     <string name="body">body</string>
     <string name="unknown_error">An unknown error occured</string>
+    <string name="editBuText">Edit</string>
+    <string name="deleteBuText">Delete</string>
 </resources>
