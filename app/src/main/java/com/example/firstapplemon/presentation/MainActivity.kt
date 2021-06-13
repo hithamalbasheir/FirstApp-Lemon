@@ -23,6 +23,7 @@ class MainActivity : BaseActivity() {
         binding.recyclerView.adapter = recyclerAdapter
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+//        .inject(this)
 //        val injector: ApplicationComponent = DaggerApplicationComponent
 //        injector.inject(this)
 //        val injector: GetPostsComponent = DaggerGetPostsComponent.create()

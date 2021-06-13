@@ -1,10 +1,12 @@
 package com.example.firstapplemon.data
 import com.example.firstapplemon.domain.*
 import com.example.firstapplemon.domain.models.Post
+import com.example.firstapplemon.presentation.di.PerActivity
 import io.reactivex.Observable
+import javax.inject.Inject
 
-
-class PostsApiImpl (private val service: PostsRetrofitService) : PostsRepository {
+@PerActivity
+class PostsApiImpl @Inject constructor(private val service: PostsRetrofitService) : PostsRepository {
 
     override fun getPosts(request: GetPostsUseCase.Request): Observable<List<Post>> {
        return service.getPosts(request)
