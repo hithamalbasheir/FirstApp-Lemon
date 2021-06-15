@@ -1,17 +1,12 @@
 package com.example.firstapplemon.presentation.di
 
-import com.example.firstapplemon.domain.PostsRepository
+import com.example.firstapplemon.di.AppComponent
+import com.example.firstapplemon.di.scopes.PerActivity
 import com.example.firstapplemon.presentation.MainActivity
-import dagger.BindsInstance
-import dagger.Subcomponent
+import dagger.Component
 
 @PerActivity
-@Subcomponent (modules = [GetPostsModule::class])
+@Component (modules = [GetPostsModule::class], dependencies = [AppComponent::class])
 interface GetPostsComponent {
     fun inject(activity: MainActivity)
-    @Subcomponent.Factory
-    interface Factory {
-        fun create(@BindsInstance postsRepository: PostsRepository): GetPostsComponent
-    }
-
 }

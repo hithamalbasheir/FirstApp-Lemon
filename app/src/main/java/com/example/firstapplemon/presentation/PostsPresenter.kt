@@ -4,35 +4,40 @@ import com.example.firstapplemon.domain.CreatePostUseCase
 import com.example.firstapplemon.domain.DeletePostUseCase
 import com.example.firstapplemon.domain.GetPostsUseCase
 import com.example.firstapplemon.domain.UpdatePostUseCase
-import com.example.firstapplemon.presentation.di.PerActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
-@PerActivity
-class PostsPresenter @Inject constructor (
+class PostsPresenter (
         private val getPostsUseCase: GetPostsUseCase,
         val createPostUseCase: CreatePostUseCase,
         val updatePostUseCase: UpdatePostUseCase,
-        val deletePostUseCase: DeletePostUseCase
+        val deletePostUseCase: DeletePostUseCase,
+        val ioScheduler: Scheduler,
+        val uiScheduler: Scheduler
 ){
 
     private val compositeDisposable = CompositeDisposable()
-//    private val compositeDisposable : CompositeDisposable? = null
+    private var view: PostsView? = null
+
+    fun attachView(view: PostsView){
+        this.view = view
+    }
+
     fun getPosts() {
         val subscription = getPostsUseCase.execute(GetPostsUseCase.Request())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(ioScheduler)
+            .observeOn(uiScheduler)
             .subscribe({
+                     view?.displayPosts(it!!)
             }, {
-
+                it.printStackTrace()
+                view?.showError(it.message)
             })
         compositeDisposable.add(subscription)
     }
 
-
     fun onDestroy(){
         compositeDisposable.clear()
+        view=null
     }
 
 }

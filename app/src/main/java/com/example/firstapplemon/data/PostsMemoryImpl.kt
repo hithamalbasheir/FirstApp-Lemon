@@ -14,22 +14,13 @@ class PostsMemoryImpl(context: Context) : PostsRepository {
     }
 
     override fun createPost(request: CreatePostUseCase.Request): Observable<Post> {
-        val post = Post(request.id,request.userId, request.title, request.body)
-        posts.add(post)
-        return Observable.just(post)
+        TODO()
     }
 
     override fun deletePost(request: DeletePostUseCase.Request): Observable<Void> {
-        val post = posts.firstOrNull { it.id == request.postId }
-        if (post != null)
-            posts.remove(post)
-        return Observable.just<Void>(null)
+       TODO()
     }
     override fun updatePost(request: UpdatePostUseCase.Request): Observable<Post> {
-        val post = posts.firstOrNull { it.userId == request.id }
-        post?.apply {
-            this.title = request.title
-        }
-        return Observable.just(post)
+       TODO()
     }
 }

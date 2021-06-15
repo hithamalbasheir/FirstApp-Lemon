@@ -4,12 +4,15 @@ package com.example.firstapplemon.presentation
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.firstapplemon.MyApplication
 import com.example.firstapplemon.base.BaseActivity
 import com.example.firstapplemon.databinding.ActivityMainBinding
 import com.example.firstapplemon.domain.models.Post
+import com.example.firstapplemon.presentation.di.DaggerGetPostsComponent
+import com.example.firstapplemon.presentation.di.GetPostsModule
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity() , PostsView{
     private val recyclerAdapter =  RecyclerAdapter(this)
     private lateinit var binding: ActivityMainBinding
     @Inject
@@ -23,18 +26,28 @@ class MainActivity : BaseActivity() {
         binding.recyclerView.adapter = recyclerAdapter
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-//        .inject(this)
-//        val injector: ApplicationComponent = DaggerApplicationComponent
-//        injector.inject(this)
-//        val injector: GetPostsComponent = DaggerGetPostsComponent.create()
-//        injector.inject(this)
+
+        DaggerGetPostsComponent.builder()
+                .getPostsModule(GetPostsModule())
+                .appComponent((application as MyApplication).getAppComponent())
+                .build()
+                .inject(this)
+
+        presenter.attachView(this)
         presenter.getPosts()
     }
 
+    override fun displayPosts(posts: List<Post>) {
+        recyclerAdapter.updatePosts(posts)
+    }
+
+    override fun showError(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-//        presenter.onDestroy()
+        presenter.onDestroy()
     }
 
     fun updatePosts(posts: List<Post>) {
