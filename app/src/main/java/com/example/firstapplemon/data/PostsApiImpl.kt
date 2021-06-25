@@ -14,9 +14,9 @@ class PostsApiImpl(private val service: PostsRetrofitService) : PostsRepository 
     }
 
     override fun deletePost(request: DeletePostUseCase.Request): Observable<Void> {
-        TODO()
+        return service.deletePost(request.postId)
     }
     override fun updatePost(request: UpdatePostUseCase.Request): Observable<Post> {
-        TODO()
+        return service.updatePost(request.id,request.post)
     }
 }

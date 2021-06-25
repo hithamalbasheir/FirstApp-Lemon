@@ -2,9 +2,8 @@ package com.example.firstapplemon.domain
 
 import com.example.firstapplemon.domain.models.Post
 import io.reactivex.Observable
-import javax.inject.Inject
 
-class UpdatePostUseCase @Inject constructor(private val repository: PostsRepository) {
+class UpdatePostUseCase(private val repository: PostsRepository) {
 
     fun execute(request: Request): Observable<Post> {
         return repository.updatePost(request)
@@ -12,8 +11,6 @@ class UpdatePostUseCase @Inject constructor(private val repository: PostsReposit
 
     data class Request(
         val id: Int,
-        val userId: Int,
-        val title: String,
-        val body: String
+        val post: Post
     )
 }

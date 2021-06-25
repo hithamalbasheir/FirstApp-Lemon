@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/userIDEditText"
+                        android:hint="@string/userID"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                            android:id="@+id/titleEditText"
+                            android:hint="@string/title"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:singleLine="true" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:id="@+id/bodyEditText"
+                        android:hint="@string/body"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                    <Button
+                        android:layout_margin="10dp"
+                        android:id="@+id/updateButton"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:background="@drawable/btn_rounded_accent"
+                        android:text="@string/update"
+                        android:textColor="@android:color/white" />
+
+    </LinearLayout>

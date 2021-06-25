@@ -1,3 +1,5 @@
 package com.example.firstapplemon.domain.models
 
-data class Post(val id: Int,val userId: Int, var title: String, val body: String)
+import java.io.Serializable
+
+data class Post(val id: Int, var userId: Int, var title: String, var body: String): Serializable

@@ -10,9 +10,14 @@ import com.example.firstapplemon.domain.models.Post
 class RecyclerAdapter(private val context: Context): RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
     private var postList = mutableListOf<Post>()
 
+    private var onActionListener: ActionListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(ListRowBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+    }
+
+    fun setOnActionListener(listener: ActionListener){
+        this.onActionListener = listener
     }
 
     override fun getItemCount(): Int {
@@ -23,6 +28,9 @@ class RecyclerAdapter(private val context: Context): RecyclerView.Adapter<Recycl
         holder.userID.text = postList[position].userId.toString()
         holder.title.text = postList[position].title
         holder.body.text = postList[position].body
+
+        holder.deleteButton.setOnClickListener { onActionListener?.onDeleteClicked(postList[position]) }
+        holder.editButton.setOnClickListener { onActionListener?.onEditClicked(postList[position]) }
     }
 
     fun updatePosts(postList: List<Post>) {
@@ -35,6 +43,14 @@ class RecyclerAdapter(private val context: Context): RecyclerView.Adapter<Recycl
         val userID = itemBinding.userID
         val title = itemBinding.title
         val body = itemBinding.body
+        val editButton = itemBinding.editButton
+        val deleteButton = itemBinding.deleteButton
+
+    }
+
+    interface ActionListener{
+        fun onDeleteClicked(post: Post)
+        fun onEditClicked(post: Post)
     }
 }
 

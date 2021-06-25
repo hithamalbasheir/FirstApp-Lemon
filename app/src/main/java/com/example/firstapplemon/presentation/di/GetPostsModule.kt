@@ -7,6 +7,7 @@ import com.example.firstapplemon.di.scopes.PerActivity
 import com.example.firstapplemon.di.scopes.UIScheduler
 import com.example.firstapplemon.domain.*
 import com.example.firstapplemon.presentation.PostsPresenter
+import com.example.firstapplemon.presentation.update.NewPostsPresenter
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -54,17 +55,25 @@ class GetPostsModule {
     @Provides
     fun providePostsPresenter(
         getPostsUseCase: GetPostsUseCase,
-        createPostUseCase: CreatePostUseCase,
-        updatePostUseCase: UpdatePostUseCase,
         deletePostUseCase: DeletePostUseCase,
         @IoScheduler  ioScheduler: Scheduler,
        @UIScheduler uiScheduler: Scheduler
     ): PostsPresenter {
         return PostsPresenter(
             getPostsUseCase,
-            createPostUseCase,
-            updatePostUseCase,
             deletePostUseCase,ioScheduler,uiScheduler
+        )
+    }
+    @PerActivity
+    @Provides
+    fun provideNewPostsPresenter(
+        updatePostUseCase: UpdatePostUseCase,
+        @IoScheduler ioScheduler: Scheduler,
+        @UIScheduler uiScheduler: Scheduler
+        ):NewPostsPresenter {
+        return NewPostsPresenter(
+            updatePostUseCase,
+            ioScheduler, uiScheduler
         )
     }
 
