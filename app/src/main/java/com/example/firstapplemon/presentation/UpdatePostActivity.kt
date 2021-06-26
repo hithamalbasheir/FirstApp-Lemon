@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firstapplemon.MyApplication
+import com.example.firstapplemon.R
 import com.example.firstapplemon.databinding.ActivityUpdatePostBinding
 import com.example.firstapplemon.domain.models.Post
 import com.example.firstapplemon.presentation.di.DaggerGetPostsComponent
@@ -30,20 +31,48 @@ class UpdatePostActivity : AppCompatActivity(), NewPostView {
             .build()
             .inject(this)
         newPostsPresenter.attachView(this)
-        post = intent.getSerializableExtra("post") as Post
-        binding.userIDEditText.setHint("User ID : ${post.userId}")
-        binding.titleEditText.setHint("Title : ${post.title}")
-        binding.bodyEditText.setHint("Body : ${post.body}")
+        if(intent.hasExtra("post")) {
+            updatePost()
+        }
+        else{
+            binding.updateButton.text = getString(R.string.addPostText)
+            createPost()
+        }
+    }
+
+    private fun createPost() {
         binding.updateButton.setOnClickListener {
-            val intent = Intent().apply {
+            val title = binding.userIDEditText.text
+            val body = binding.bodyEditText.text
+            val userID = binding.userIDEditText.text
+            if (title.isNullOrEmpty() || body.isNullOrEmpty() || userID.isNullOrEmpty()) {
+                Toast.makeText(this, getString(R.string.fillFields), Toast.LENGTH_SHORT).show()
+            } else {
+                intent = Intent().apply {
+                    post = Post(0, userID.toString().toInt(), title.toString(), body.toString())
+                    newPostsPresenter.onCreate(post)
+                }
+                setResult(Activity.RESULT_OK)
+                finish()
+            }
+        }
+    }
+
+    private fun updatePost() {
+        post = intent.getSerializableExtra("post") as Post
+        binding.userIDEditText.hint = "User ID : ${post.userId}"
+        binding.titleEditText.hint = "Title : ${post.title}"
+        binding.bodyEditText.hint = "Body : ${post.body}"
+        binding.updateButton.setOnClickListener {
+            Intent().apply {
                 val userID = binding.userIDEditText.text.toString()
                 val title = binding.titleEditText.text.toString()
                 val body = binding.bodyEditText.text.toString()
-                post.userId =  if (userID.isNotEmpty()) userID.toInt() else post.userId
-                post.title =  if (title.isNotEmpty()) title else post.title
-                post.body =  if (body.isNotEmpty()) body else post.body
+                post.userId = if (userID.isNotEmpty()) userID.toInt() else post.userId
+                post.title = if (title.isNotEmpty()) title else post.title
+                post.body = if (body.isNotEmpty()) body else post.body
                 newPostsPresenter.onUpdate(post)
-                putExtra("post",post)
+                putExtra("post", post)
             }
             setResult(Activity.RESULT_OK)
             finish()
@@ -52,6 +81,10 @@ class UpdatePostActivity : AppCompatActivity(), NewPostView {
 
     override fun updatedSuccessfully() {
         Toast.makeText(this,"Post with title ${post.title} Updated Successfully",Toast.LENGTH_LONG).show()
+    }
+
+    override fun createdSuccessfully() {
+        Toast.makeText(this, "Post with title ${post.title} Created Successfully", Toast.LENGTH_LONG).show()
     }
 
     override fun showError(message: String?) {

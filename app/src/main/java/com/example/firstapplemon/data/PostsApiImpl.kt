@@ -10,7 +10,7 @@ class PostsApiImpl(private val service: PostsRetrofitService) : PostsRepository 
     }
 
     override fun createPost(request: CreatePostUseCase.Request): Observable<Post> {
-        TODO()
+        return service.createPost(request.post)
     }
 
     override fun deletePost(request: DeletePostUseCase.Request): Observable<Void> {

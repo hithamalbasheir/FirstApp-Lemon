@@ -12,9 +12,6 @@ class CreatePostUseCase(private val repository: PostsRepository){
     }
 
     data class Request(
-        val id: Int,
-        val userId: Int,
-        val title: String,
-        val body: String
+       val post: Post
     ) : Serializable
 }

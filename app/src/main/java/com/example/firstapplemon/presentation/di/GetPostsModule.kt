@@ -68,11 +68,13 @@ class GetPostsModule {
     @Provides
     fun provideNewPostsPresenter(
         updatePostUseCase: UpdatePostUseCase,
+        createPostUseCase: CreatePostUseCase,
         @IoScheduler ioScheduler: Scheduler,
         @UIScheduler uiScheduler: Scheduler
         ):NewPostsPresenter {
         return NewPostsPresenter(
             updatePostUseCase,
+            createPostUseCase,
             ioScheduler, uiScheduler
         )
     }

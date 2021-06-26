@@ -13,8 +13,8 @@ interface  PostsRetrofitService {
     @DELETE("/posts/{id}")
     fun deletePost(@Path("id")id: Int) : Observable<Void>
 
-//    @POST("")
-//    fun createPost(request: CreatePostUseCase.Request) : Observable<Post>
+    @POST("/posts")
+    fun createPost(@Body post: Post) : Observable<Post>
     @Headers("Content-Type: application/json")
     @PUT("/posts/{id}")
     fun updatePost(@Path("id")id: Int, @Body post: Post) : Observable<Post>

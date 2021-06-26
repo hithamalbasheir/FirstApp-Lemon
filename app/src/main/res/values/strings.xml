@@ -3,8 +3,11 @@
     <string name="userID">userID</string>
     <string name="title">Title</string>
     <string name="body">body</string>
-    <string name="unknown_error">An unknown error occured</string>
+    <string name="unknown_error">An unknown error occurred</string>
     <string name="editBuText">Edit</string>
     <string name="deleteBuText">Delete</string>
     <string name="update">Update</string>
+    <string name="submit">create post</string>
+    <string name="addPostText">Add Post</string>
+    <string name="fillFields">Please fill all the fields U morron</string>
 </resources>
